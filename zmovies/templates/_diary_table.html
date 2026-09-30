@@ -1,0 +1,26 @@
+{% from "_macros.html" import sort_header, pager %}
+<table class="striped">
+  <thead>
+    <tr>
+      {{ sort_header('diary', 'date', 'Date', sort, order, q) }}
+      {{ sort_header('diary', 'title', 'Title', sort, order, q) }}
+      {{ sort_header('diary', 'year', 'Year', sort, order, q) }}
+      <th>Rewatch</th>
+      <th>Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for v in rows %}
+      <tr>
+        <td>{{ v.date }}</td>
+        <td><a href="{{ url_for('movie', movie_id=v.movie_id) }}">{{ v.title }}</a></td>
+        <td>{{ v.year or '' }}</td>
+        <td>{{ '✓' if v.rewatch else '' }}</td>
+        <td>{{ v.tags or '' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5">No viewings found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ pager('diary', page, pages, total, sort, order, q) }}

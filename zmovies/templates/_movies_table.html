@@ -1,0 +1,24 @@
+{% from "_macros.html" import sort_header, pager %}
+<table class="striped">
+  <thead>
+    <tr>
+      {{ sort_header('movies', 'title', 'Title', sort, order, q) }}
+      {{ sort_header('movies', 'year', 'Year', sort, order, q) }}
+      {{ sort_header('movies', 'viewings', 'Viewings', sort, order, q) }}
+      {{ sort_header('movies', 'last', 'Last viewed', sort, order, q) }}
+    </tr>
+  </thead>
+  <tbody>
+    {% for m in rows %}
+      <tr>
+        <td><a href="{{ url_for('movie', movie_id=m.id) }}">{{ m.title }}</a></td>
+        <td>{{ m.year or '' }}</td>
+        <td>{{ m.viewings }}</td>
+        <td>{{ m.last_viewed or '' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4">No movies found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ pager('movies', page, pages, total, sort, order, q) }}

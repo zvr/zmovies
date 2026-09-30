@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% from "_macros.html" import search_form %}
+{% block title %}Movies · zmovies{% endblock %}
+{% block content %}
+  <h1>Movies</h1>
+  {{ search_form('movies', sort, order, q) }}
+  <div id="results">
+    {% include "_movies_table.html" %}
+  </div>
+{% endblock %}

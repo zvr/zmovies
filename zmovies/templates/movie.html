@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ movie.title }} · zmovies{% endblock %}
+{% block content %}
+  <article>
+    <header>
+      <h1>{{ movie.title }}{% if movie.year %} <small>({{ movie.year }})</small>{% endif %}</h1>
+      {% if movie.url %}<a href="{{ movie.url }}" target="_blank" rel="noopener">View on Letterboxd</a>{% endif %}
+    </header>
+    <h2>Viewings</h2>
+    {% if viewings %}
+      <table class="striped">
+        <thead><tr><th>Date</th><th>Rewatch</th><th>Tags</th></tr></thead>
+        <tbody>
+          {% for v in viewings %}
+            <tr>
+              <td>{{ v.date }}</td>
+              <td>{{ '✓' if v.rewatch else '' }}</td>
+              <td>{{ v.tags or '' }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No diary entries recorded for this movie.</p>
+    {% endif %}
+  </article>
+{% endblock %}
