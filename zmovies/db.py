@@ -1,4 +1,6 @@
 """Loading of the Letterboxd CSV exports into a local SQLite database."""
+# Copyright (c) 2026 Alexios Zavras
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import csv
 import sqlite3
@@ -56,14 +58,10 @@ def _read_csv(path: Path) -> list[dict[str, str]]:
 
 
 def _movie_id(conn: sqlite3.Connection, title: str, year: int | None, url: str | None) -> int:
-    row = conn.execute(
-        "SELECT id FROM movie WHERE title = ? AND year IS ?", (title, year)
-    ).fetchone()
+    row = conn.execute("SELECT id FROM movie WHERE title = ? AND year IS ?", (title, year)).fetchone()
     if row:
         return row[0]
-    cur = conn.execute(
-        "INSERT INTO movie (title, year, url) VALUES (?, ?, ?)", (title, year, url)
-    )
+    cur = conn.execute("INSERT INTO movie (title, year, url) VALUES (?, ?, ?)", (title, year, url))
     return cur.lastrowid
 
 

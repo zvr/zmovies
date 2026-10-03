@@ -1,8 +1,11 @@
 [project]
 name = "zmovies"
-version = "0.1.0"
+version = "0.1.1"
 description = "Personal read-only web view of watched movies, driven by Letterboxd CSV exports"
 readme = "README.md"
+authors = [
+    { name = "Alexios Zavras", email = "git@zvr.gr" }
+]
 requires-python = ">=3.11"
 dependencies = [
     "flask>=3.0",
@@ -14,3 +17,49 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["zmovies"]
+
+
+[tool.ruff]
+exclude = [ ".git", ".ruff_cache", ".venv", ".vs", ".vscode", ]
+fix = false
+indent-width = 4
+line-length = 120
+# output-format = "full"
+output-format = "grouped"
+preview = true
+required-version = ">=0.15"
+show-fixes = true
+target-version = "py314"
+
+[tool.ruff.analyze]
+direction = "dependencies"
+preview = true
+
+[tool.ruff.format]
+docstring-code-format = true
+indent-style = "space"
+line-ending = "native"
+nested-string-quote-style = "alternating"
+preview = true
+quote-style = "double"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+fixable = ["ALL"]
+future-annotations = true
+ignore = [ "AIR", "ANN", "missing-trailing-comma", "D", "DJ", "DOC", "FAST", "NPY", "PD", ]
+logger-objects = []
+preview = true
+select =  ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.per-file-ignores]
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+lines-between-types = 0
+split-on-trailing-comma = false
+
+[tool.ruff.lint.mccabe]
+max-complexity = 12
+

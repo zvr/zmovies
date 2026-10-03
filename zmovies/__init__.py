@@ -1,4 +1,6 @@
 """zmovies: a personal, read-only web view of watched movies."""
+# Copyright (c) 2026 Alexios Zavras
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
 from pathlib import Path
@@ -9,18 +11,9 @@ from . import db
 
 PAGE_SIZE = 100
 
-MOVIE_SORTS = {
-    "title": "m.title COLLATE NOCASE",
-    "year": "m.year",
-    "viewings": "viewings",
-    "last": "last_viewed",
-}
+MOVIE_SORTS = {"title": "m.title COLLATE NOCASE", "year": "m.year", "viewings": "viewings", "last": "last_viewed"}
 
-DIARY_SORTS = {
-    "date": "v.date",
-    "title": "m.title COLLATE NOCASE",
-    "year": "m.year",
-}
+DIARY_SORTS = {"date": "v.date", "title": "m.title COLLATE NOCASE", "year": "m.year"}
 
 
 def create_app() -> Flask:
@@ -80,8 +73,14 @@ def create_app() -> Flask:
             [*args, PAGE_SIZE, (page - 1) * PAGE_SIZE],
         ).fetchall()
         return render_list(
-            "movies.html", "_movies_table.html",
-            rows=rows, total=total, sort=sort, order=order, q=q, page=page,
+            "movies.html",
+            "_movies_table.html",
+            rows=rows,
+            total=total,
+            sort=sort,
+            order=order,
+            q=q,
+            page=page,
             pages=max((total + PAGE_SIZE - 1) // PAGE_SIZE, 1),
         )
 
@@ -106,8 +105,14 @@ def create_app() -> Flask:
             [*args, PAGE_SIZE, (page - 1) * PAGE_SIZE],
         ).fetchall()
         return render_list(
-            "diary.html", "_diary_table.html",
-            rows=rows, total=total, sort=sort, order=order, q=q, page=page,
+            "diary.html",
+            "_diary_table.html",
+            rows=rows,
+            total=total,
+            sort=sort,
+            order=order,
+            q=q,
+            page=page,
             pages=max((total + PAGE_SIZE - 1) // PAGE_SIZE, 1),
         )
 
@@ -118,8 +123,7 @@ def create_app() -> Flask:
         if m is None:
             abort(404)
         viewings = conn.execute(
-            "SELECT date, rewatch, tags FROM viewing WHERE movie_id = ? ORDER BY date",
-            (movie_id,),
+            "SELECT date, rewatch, tags FROM viewing WHERE movie_id = ? ORDER BY date", (movie_id,)
         ).fetchall()
         return render_template("movie.html", movie=m, viewings=viewings)
 
